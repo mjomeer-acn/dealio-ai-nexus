@@ -14,6 +14,7 @@ import { Route as PublicRouteImport } from './routes/_public'
 import { Route as DealerIndexRouteImport } from './routes/dealer.index'
 import { Route as PublicIndexRouteImport } from './routes/_public.index'
 import { Route as DealerLeadsRouteImport } from './routes/dealer.leads'
+import { Route as DealerInventoryRouteImport } from './routes/dealer.inventory'
 import { Route as PublicTermsRouteImport } from './routes/_public.terms'
 import { Route as PublicRegisterRouteImport } from './routes/_public.register'
 import { Route as PublicPrivacyRouteImport } from './routes/_public.privacy'
@@ -48,6 +49,11 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
 const DealerLeadsRoute = DealerLeadsRouteImport.update({
   id: '/leads',
   path: '/leads',
+  getParentRoute: () => DealerRoute,
+} as any)
+const DealerInventoryRoute = DealerInventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
   getParentRoute: () => DealerRoute,
 } as any)
 const PublicTermsRoute = PublicTermsRouteImport.update({
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PublicPrivacyRoute
   '/register': typeof PublicRegisterRoute
   '/terms': typeof PublicTermsRoute
+  '/dealer/inventory': typeof DealerInventoryRoute
   '/dealer/leads': typeof DealerLeadsRouteWithChildren
   '/dealer/': typeof DealerIndexRoute
   '/vehicles/$id': typeof PublicVehiclesIdRoute
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PublicPrivacyRoute
   '/register': typeof PublicRegisterRoute
   '/terms': typeof PublicTermsRoute
+  '/dealer/inventory': typeof DealerInventoryRoute
   '/dealer/leads': typeof DealerLeadsRouteWithChildren
   '/': typeof PublicIndexRoute
   '/dealer': typeof DealerIndexRoute
@@ -152,6 +160,7 @@ export interface FileRoutesById {
   '/_public/privacy': typeof PublicPrivacyRoute
   '/_public/register': typeof PublicRegisterRoute
   '/_public/terms': typeof PublicTermsRoute
+  '/dealer/inventory': typeof DealerInventoryRoute
   '/dealer/leads': typeof DealerLeadsRouteWithChildren
   '/_public/': typeof PublicIndexRoute
   '/dealer/': typeof DealerIndexRoute
@@ -172,6 +181,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/dealer/inventory'
     | '/dealer/leads'
     | '/dealer/'
     | '/vehicles/$id'
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/dealer/inventory'
     | '/dealer/leads'
     | '/'
     | '/dealer'
@@ -205,6 +216,7 @@ export interface FileRouteTypes {
     | '/_public/privacy'
     | '/_public/register'
     | '/_public/terms'
+    | '/dealer/inventory'
     | '/dealer/leads'
     | '/_public/'
     | '/dealer/'
@@ -252,6 +264,13 @@ declare module '@tanstack/react-router' {
       path: '/leads'
       fullPath: '/dealer/leads'
       preLoaderRoute: typeof DealerLeadsRouteImport
+      parentRoute: typeof DealerRoute
+    }
+    '/dealer/inventory': {
+      id: '/dealer/inventory'
+      path: '/inventory'
+      fullPath: '/dealer/inventory'
+      preLoaderRoute: typeof DealerInventoryRouteImport
       parentRoute: typeof DealerRoute
     }
     '/_public/terms': {
@@ -378,11 +397,13 @@ const DealerLeadsRouteWithChildren = DealerLeadsRoute._addFileChildren(
 )
 
 interface DealerRouteChildren {
+  DealerInventoryRoute: typeof DealerInventoryRoute
   DealerLeadsRoute: typeof DealerLeadsRouteWithChildren
   DealerIndexRoute: typeof DealerIndexRoute
 }
 
 const DealerRouteChildren: DealerRouteChildren = {
+  DealerInventoryRoute: DealerInventoryRoute,
   DealerLeadsRoute: DealerLeadsRouteWithChildren,
   DealerIndexRoute: DealerIndexRoute,
 }
