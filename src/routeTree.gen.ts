@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as PublicIndexRouteImport } from './routes/_public.index'
 import { Route as PublicBrowseRouteImport } from './routes/_public.browse'
+import { Route as PublicVehiclesIdRouteImport } from './routes/_public.vehicles.$id'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -27,27 +28,40 @@ const PublicBrowseRoute = PublicBrowseRouteImport.update({
   path: '/browse',
   getParentRoute: () => PublicRoute,
 } as any)
+const PublicVehiclesIdRoute = PublicVehiclesIdRouteImport.update({
+  id: '/vehicles/$id',
+  path: '/vehicles/$id',
+  getParentRoute: () => PublicRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
   '/browse': typeof PublicBrowseRoute
+  '/vehicles/$id': typeof PublicVehiclesIdRoute
 }
 export interface FileRoutesByTo {
   '/browse': typeof PublicBrowseRoute
   '/': typeof PublicIndexRoute
+  '/vehicles/$id': typeof PublicVehiclesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_public': typeof PublicRouteWithChildren
   '/_public/browse': typeof PublicBrowseRoute
   '/_public/': typeof PublicIndexRoute
+  '/_public/vehicles/$id': typeof PublicVehiclesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/browse'
+  fullPaths: '/' | '/browse' | '/vehicles/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/browse' | '/'
-  id: '__root__' | '/_public' | '/_public/browse' | '/_public/'
+  to: '/browse' | '/' | '/vehicles/$id'
+  id:
+    | '__root__'
+    | '/_public'
+    | '/_public/browse'
+    | '/_public/'
+    | '/_public/vehicles/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,17 +91,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicBrowseRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_public/vehicles/$id': {
+      id: '/_public/vehicles/$id'
+      path: '/vehicles/$id'
+      fullPath: '/vehicles/$id'
+      preLoaderRoute: typeof PublicVehiclesIdRouteImport
+      parentRoute: typeof PublicRoute
+    }
   }
 }
 
 interface PublicRouteChildren {
   PublicBrowseRoute: typeof PublicBrowseRoute
   PublicIndexRoute: typeof PublicIndexRoute
+  PublicVehiclesIdRoute: typeof PublicVehiclesIdRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicBrowseRoute: PublicBrowseRoute,
   PublicIndexRoute: PublicIndexRoute,
+  PublicVehiclesIdRoute: PublicVehiclesIdRoute,
 }
 
 const PublicRouteWithChildren =
