@@ -9,61 +9,586 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as DealerRouteImport } from './routes/dealer'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as PublicRouteImport } from './routes/_public'
+import { Route as DealerIndexRouteImport } from './routes/dealer.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as PublicIndexRouteImport } from './routes/_public.index'
+import { Route as DealerLeadsRouteImport } from './routes/dealer.leads'
+import { Route as DealerInventoryRouteImport } from './routes/dealer.inventory'
+import { Route as DealerCommissionsRouteImport } from './routes/dealer.commissions'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
+import { Route as AdminKnowledgeRouteImport } from './routes/admin.knowledge'
+import { Route as AdminDealersRouteImport } from './routes/admin.dealers'
+import { Route as AdminAuditRouteImport } from './routes/admin.audit'
+import { Route as PublicTermsRouteImport } from './routes/_public.terms'
+import { Route as PublicRegisterRouteImport } from './routes/_public.register'
+import { Route as PublicPrivacyRouteImport } from './routes/_public.privacy'
+import { Route as PublicMyInquiriesRouteImport } from './routes/_public.my-inquiries'
+import { Route as PublicLoginRouteImport } from './routes/_public.login'
+import { Route as PublicLeadCaptureRouteImport } from './routes/_public.lead-capture'
+import { Route as PublicContactRouteImport } from './routes/_public.contact'
+import { Route as PublicBrowseRouteImport } from './routes/_public.browse'
+import { Route as PublicAdvisorRouteImport } from './routes/_public.advisor'
+import { Route as DealerLeadsIdRouteImport } from './routes/dealer.leads.$id'
+import { Route as PublicVehiclesIdRouteImport } from './routes/_public.vehicles.$id'
 
-const IndexRoute = IndexRouteImport.update({
+const DealerRoute = DealerRouteImport.update({
+  id: '/dealer',
+  path: '/dealer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicRoute = PublicRouteImport.update({
+  id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DealerIndexRoute = DealerIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => DealerRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const PublicIndexRoute = PublicIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PublicRoute,
+} as any)
+const DealerLeadsRoute = DealerLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => DealerRoute,
+} as any)
+const DealerInventoryRoute = DealerInventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
+  getParentRoute: () => DealerRoute,
+} as any)
+const DealerCommissionsRoute = DealerCommissionsRouteImport.update({
+  id: '/commissions',
+  path: '/commissions',
+  getParentRoute: () => DealerRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminKnowledgeRoute = AdminKnowledgeRouteImport.update({
+  id: '/knowledge',
+  path: '/knowledge',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDealersRoute = AdminDealersRouteImport.update({
+  id: '/dealers',
+  path: '/dealers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAuditRoute = AdminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AdminRoute,
+} as any)
+const PublicTermsRoute = PublicTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicRegisterRoute = PublicRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicPrivacyRoute = PublicPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicMyInquiriesRoute = PublicMyInquiriesRouteImport.update({
+  id: '/my-inquiries',
+  path: '/my-inquiries',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicLoginRoute = PublicLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicLeadCaptureRoute = PublicLeadCaptureRouteImport.update({
+  id: '/lead-capture',
+  path: '/lead-capture',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicContactRoute = PublicContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicBrowseRoute = PublicBrowseRouteImport.update({
+  id: '/browse',
+  path: '/browse',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicAdvisorRoute = PublicAdvisorRouteImport.update({
+  id: '/advisor',
+  path: '/advisor',
+  getParentRoute: () => PublicRoute,
+} as any)
+const DealerLeadsIdRoute = DealerLeadsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => DealerLeadsRoute,
+} as any)
+const PublicVehiclesIdRoute = PublicVehiclesIdRouteImport.update({
+  id: '/vehicles/$id',
+  path: '/vehicles/$id',
+  getParentRoute: () => PublicRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof PublicIndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/dealer': typeof DealerRouteWithChildren
+  '/advisor': typeof PublicAdvisorRoute
+  '/browse': typeof PublicBrowseRoute
+  '/contact': typeof PublicContactRoute
+  '/lead-capture': typeof PublicLeadCaptureRoute
+  '/login': typeof PublicLoginRoute
+  '/my-inquiries': typeof PublicMyInquiriesRoute
+  '/privacy': typeof PublicPrivacyRoute
+  '/register': typeof PublicRegisterRoute
+  '/terms': typeof PublicTermsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/dealers': typeof AdminDealersRoute
+  '/admin/knowledge': typeof AdminKnowledgeRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/dealer/commissions': typeof DealerCommissionsRoute
+  '/dealer/inventory': typeof DealerInventoryRoute
+  '/dealer/leads': typeof DealerLeadsRouteWithChildren
+  '/admin/': typeof AdminIndexRoute
+  '/dealer/': typeof DealerIndexRoute
+  '/vehicles/$id': typeof PublicVehiclesIdRoute
+  '/dealer/leads/$id': typeof DealerLeadsIdRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/advisor': typeof PublicAdvisorRoute
+  '/browse': typeof PublicBrowseRoute
+  '/contact': typeof PublicContactRoute
+  '/lead-capture': typeof PublicLeadCaptureRoute
+  '/login': typeof PublicLoginRoute
+  '/my-inquiries': typeof PublicMyInquiriesRoute
+  '/privacy': typeof PublicPrivacyRoute
+  '/register': typeof PublicRegisterRoute
+  '/terms': typeof PublicTermsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/dealers': typeof AdminDealersRoute
+  '/admin/knowledge': typeof AdminKnowledgeRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/dealer/commissions': typeof DealerCommissionsRoute
+  '/dealer/inventory': typeof DealerInventoryRoute
+  '/dealer/leads': typeof DealerLeadsRouteWithChildren
+  '/': typeof PublicIndexRoute
+  '/admin': typeof AdminIndexRoute
+  '/dealer': typeof DealerIndexRoute
+  '/vehicles/$id': typeof PublicVehiclesIdRoute
+  '/dealer/leads/$id': typeof DealerLeadsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_public': typeof PublicRouteWithChildren
+  '/admin': typeof AdminRouteWithChildren
+  '/dealer': typeof DealerRouteWithChildren
+  '/_public/advisor': typeof PublicAdvisorRoute
+  '/_public/browse': typeof PublicBrowseRoute
+  '/_public/contact': typeof PublicContactRoute
+  '/_public/lead-capture': typeof PublicLeadCaptureRoute
+  '/_public/login': typeof PublicLoginRoute
+  '/_public/my-inquiries': typeof PublicMyInquiriesRoute
+  '/_public/privacy': typeof PublicPrivacyRoute
+  '/_public/register': typeof PublicRegisterRoute
+  '/_public/terms': typeof PublicTermsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/dealers': typeof AdminDealersRoute
+  '/admin/knowledge': typeof AdminKnowledgeRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/dealer/commissions': typeof DealerCommissionsRoute
+  '/dealer/inventory': typeof DealerInventoryRoute
+  '/dealer/leads': typeof DealerLeadsRouteWithChildren
+  '/_public/': typeof PublicIndexRoute
+  '/admin/': typeof AdminIndexRoute
+  '/dealer/': typeof DealerIndexRoute
+  '/_public/vehicles/$id': typeof PublicVehiclesIdRoute
+  '/dealer/leads/$id': typeof DealerLeadsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/dealer'
+    | '/advisor'
+    | '/browse'
+    | '/contact'
+    | '/lead-capture'
+    | '/login'
+    | '/my-inquiries'
+    | '/privacy'
+    | '/register'
+    | '/terms'
+    | '/admin/audit'
+    | '/admin/dealers'
+    | '/admin/knowledge'
+    | '/admin/leads'
+    | '/admin/users'
+    | '/dealer/commissions'
+    | '/dealer/inventory'
+    | '/dealer/leads'
+    | '/admin/'
+    | '/dealer/'
+    | '/vehicles/$id'
+    | '/dealer/leads/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/advisor'
+    | '/browse'
+    | '/contact'
+    | '/lead-capture'
+    | '/login'
+    | '/my-inquiries'
+    | '/privacy'
+    | '/register'
+    | '/terms'
+    | '/admin/audit'
+    | '/admin/dealers'
+    | '/admin/knowledge'
+    | '/admin/leads'
+    | '/admin/users'
+    | '/dealer/commissions'
+    | '/dealer/inventory'
+    | '/dealer/leads'
+    | '/'
+    | '/admin'
+    | '/dealer'
+    | '/vehicles/$id'
+    | '/dealer/leads/$id'
+  id:
+    | '__root__'
+    | '/_public'
+    | '/admin'
+    | '/dealer'
+    | '/_public/advisor'
+    | '/_public/browse'
+    | '/_public/contact'
+    | '/_public/lead-capture'
+    | '/_public/login'
+    | '/_public/my-inquiries'
+    | '/_public/privacy'
+    | '/_public/register'
+    | '/_public/terms'
+    | '/admin/audit'
+    | '/admin/dealers'
+    | '/admin/knowledge'
+    | '/admin/leads'
+    | '/admin/users'
+    | '/dealer/commissions'
+    | '/dealer/inventory'
+    | '/dealer/leads'
+    | '/_public/'
+    | '/admin/'
+    | '/dealer/'
+    | '/_public/vehicles/$id'
+    | '/dealer/leads/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  PublicRoute: typeof PublicRouteWithChildren
+  AdminRoute: typeof AdminRouteWithChildren
+  DealerRoute: typeof DealerRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/dealer': {
+      id: '/dealer'
+      path: '/dealer'
+      fullPath: '/dealer'
+      preLoaderRoute: typeof DealerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dealer/': {
+      id: '/dealer/'
+      path: '/'
+      fullPath: '/dealer/'
+      preLoaderRoute: typeof DealerIndexRouteImport
+      parentRoute: typeof DealerRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_public/': {
+      id: '/_public/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/dealer/leads': {
+      id: '/dealer/leads'
+      path: '/leads'
+      fullPath: '/dealer/leads'
+      preLoaderRoute: typeof DealerLeadsRouteImport
+      parentRoute: typeof DealerRoute
+    }
+    '/dealer/inventory': {
+      id: '/dealer/inventory'
+      path: '/inventory'
+      fullPath: '/dealer/inventory'
+      preLoaderRoute: typeof DealerInventoryRouteImport
+      parentRoute: typeof DealerRoute
+    }
+    '/dealer/commissions': {
+      id: '/dealer/commissions'
+      path: '/commissions'
+      fullPath: '/dealer/commissions'
+      preLoaderRoute: typeof DealerCommissionsRouteImport
+      parentRoute: typeof DealerRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/knowledge': {
+      id: '/admin/knowledge'
+      path: '/knowledge'
+      fullPath: '/admin/knowledge'
+      preLoaderRoute: typeof AdminKnowledgeRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/dealers': {
+      id: '/admin/dealers'
+      path: '/dealers'
+      fullPath: '/admin/dealers'
+      preLoaderRoute: typeof AdminDealersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/audit': {
+      id: '/admin/audit'
+      path: '/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AdminAuditRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_public/terms': {
+      id: '/_public/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof PublicTermsRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/register': {
+      id: '/_public/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof PublicRegisterRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/privacy': {
+      id: '/_public/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PublicPrivacyRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/my-inquiries': {
+      id: '/_public/my-inquiries'
+      path: '/my-inquiries'
+      fullPath: '/my-inquiries'
+      preLoaderRoute: typeof PublicMyInquiriesRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/login': {
+      id: '/_public/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof PublicLoginRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/lead-capture': {
+      id: '/_public/lead-capture'
+      path: '/lead-capture'
+      fullPath: '/lead-capture'
+      preLoaderRoute: typeof PublicLeadCaptureRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/contact': {
+      id: '/_public/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof PublicContactRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/browse': {
+      id: '/_public/browse'
+      path: '/browse'
+      fullPath: '/browse'
+      preLoaderRoute: typeof PublicBrowseRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/advisor': {
+      id: '/_public/advisor'
+      path: '/advisor'
+      fullPath: '/advisor'
+      preLoaderRoute: typeof PublicAdvisorRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/dealer/leads/$id': {
+      id: '/dealer/leads/$id'
+      path: '/$id'
+      fullPath: '/dealer/leads/$id'
+      preLoaderRoute: typeof DealerLeadsIdRouteImport
+      parentRoute: typeof DealerLeadsRoute
+    }
+    '/_public/vehicles/$id': {
+      id: '/_public/vehicles/$id'
+      path: '/vehicles/$id'
+      fullPath: '/vehicles/$id'
+      preLoaderRoute: typeof PublicVehiclesIdRouteImport
+      parentRoute: typeof PublicRoute
     }
   }
 }
 
+interface PublicRouteChildren {
+  PublicAdvisorRoute: typeof PublicAdvisorRoute
+  PublicBrowseRoute: typeof PublicBrowseRoute
+  PublicContactRoute: typeof PublicContactRoute
+  PublicLeadCaptureRoute: typeof PublicLeadCaptureRoute
+  PublicLoginRoute: typeof PublicLoginRoute
+  PublicMyInquiriesRoute: typeof PublicMyInquiriesRoute
+  PublicPrivacyRoute: typeof PublicPrivacyRoute
+  PublicRegisterRoute: typeof PublicRegisterRoute
+  PublicTermsRoute: typeof PublicTermsRoute
+  PublicIndexRoute: typeof PublicIndexRoute
+  PublicVehiclesIdRoute: typeof PublicVehiclesIdRoute
+}
+
+const PublicRouteChildren: PublicRouteChildren = {
+  PublicAdvisorRoute: PublicAdvisorRoute,
+  PublicBrowseRoute: PublicBrowseRoute,
+  PublicContactRoute: PublicContactRoute,
+  PublicLeadCaptureRoute: PublicLeadCaptureRoute,
+  PublicLoginRoute: PublicLoginRoute,
+  PublicMyInquiriesRoute: PublicMyInquiriesRoute,
+  PublicPrivacyRoute: PublicPrivacyRoute,
+  PublicRegisterRoute: PublicRegisterRoute,
+  PublicTermsRoute: PublicTermsRoute,
+  PublicIndexRoute: PublicIndexRoute,
+  PublicVehiclesIdRoute: PublicVehiclesIdRoute,
+}
+
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
+
+interface AdminRouteChildren {
+  AdminAuditRoute: typeof AdminAuditRoute
+  AdminDealersRoute: typeof AdminDealersRoute
+  AdminKnowledgeRoute: typeof AdminKnowledgeRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAuditRoute: AdminAuditRoute,
+  AdminDealersRoute: AdminDealersRoute,
+  AdminKnowledgeRoute: AdminKnowledgeRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface DealerLeadsRouteChildren {
+  DealerLeadsIdRoute: typeof DealerLeadsIdRoute
+}
+
+const DealerLeadsRouteChildren: DealerLeadsRouteChildren = {
+  DealerLeadsIdRoute: DealerLeadsIdRoute,
+}
+
+const DealerLeadsRouteWithChildren = DealerLeadsRoute._addFileChildren(
+  DealerLeadsRouteChildren,
+)
+
+interface DealerRouteChildren {
+  DealerCommissionsRoute: typeof DealerCommissionsRoute
+  DealerInventoryRoute: typeof DealerInventoryRoute
+  DealerLeadsRoute: typeof DealerLeadsRouteWithChildren
+  DealerIndexRoute: typeof DealerIndexRoute
+}
+
+const DealerRouteChildren: DealerRouteChildren = {
+  DealerCommissionsRoute: DealerCommissionsRoute,
+  DealerInventoryRoute: DealerInventoryRoute,
+  DealerLeadsRoute: DealerLeadsRouteWithChildren,
+  DealerIndexRoute: DealerIndexRoute,
+}
+
+const DealerRouteWithChildren =
+  DealerRoute._addFileChildren(DealerRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  PublicRoute: PublicRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
+  DealerRoute: DealerRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
