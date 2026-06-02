@@ -69,7 +69,7 @@ export const vehicleSchema = z.object({
   priceMUR: z.coerce.number().int().positive().max(50_000_000),
   color: z.string().trim().min(1).max(40),
   description: z.string().trim().min(10).max(5000),
-  features: z.array(z.string().trim().max(80)).max(40).default([]),
+  features: z.array(z.string().trim().max(80)).max(40).optional(),
 });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
