@@ -9,8 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DealerRouteImport } from './routes/dealer'
 import { Route as PublicRouteImport } from './routes/_public'
+import { Route as DealerIndexRouteImport } from './routes/dealer.index'
 import { Route as PublicIndexRouteImport } from './routes/_public.index'
+import { Route as DealerLeadsRouteImport } from './routes/dealer.leads'
 import { Route as PublicTermsRouteImport } from './routes/_public.terms'
 import { Route as PublicRegisterRouteImport } from './routes/_public.register'
 import { Route as PublicPrivacyRouteImport } from './routes/_public.privacy'
@@ -22,14 +25,29 @@ import { Route as PublicBrowseRouteImport } from './routes/_public.browse'
 import { Route as PublicAdvisorRouteImport } from './routes/_public.advisor'
 import { Route as PublicVehiclesIdRouteImport } from './routes/_public.vehicles.$id'
 
+const DealerRoute = DealerRouteImport.update({
+  id: '/dealer',
+  path: '/dealer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DealerIndexRoute = DealerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DealerRoute,
 } as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => PublicRoute,
+} as any)
+const DealerLeadsRoute = DealerLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => DealerRoute,
 } as any)
 const PublicTermsRoute = PublicTermsRouteImport.update({
   id: '/terms',
@@ -84,6 +102,7 @@ const PublicVehiclesIdRoute = PublicVehiclesIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
+  '/dealer': typeof DealerRouteWithChildren
   '/advisor': typeof PublicAdvisorRoute
   '/browse': typeof PublicBrowseRoute
   '/contact': typeof PublicContactRoute
@@ -93,6 +112,8 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PublicPrivacyRoute
   '/register': typeof PublicRegisterRoute
   '/terms': typeof PublicTermsRoute
+  '/dealer/leads': typeof DealerLeadsRoute
+  '/dealer/': typeof DealerIndexRoute
   '/vehicles/$id': typeof PublicVehiclesIdRoute
 }
 export interface FileRoutesByTo {
@@ -105,12 +126,15 @@ export interface FileRoutesByTo {
   '/privacy': typeof PublicPrivacyRoute
   '/register': typeof PublicRegisterRoute
   '/terms': typeof PublicTermsRoute
+  '/dealer/leads': typeof DealerLeadsRoute
   '/': typeof PublicIndexRoute
+  '/dealer': typeof DealerIndexRoute
   '/vehicles/$id': typeof PublicVehiclesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_public': typeof PublicRouteWithChildren
+  '/dealer': typeof DealerRouteWithChildren
   '/_public/advisor': typeof PublicAdvisorRoute
   '/_public/browse': typeof PublicBrowseRoute
   '/_public/contact': typeof PublicContactRoute
@@ -120,13 +144,16 @@ export interface FileRoutesById {
   '/_public/privacy': typeof PublicPrivacyRoute
   '/_public/register': typeof PublicRegisterRoute
   '/_public/terms': typeof PublicTermsRoute
+  '/dealer/leads': typeof DealerLeadsRoute
   '/_public/': typeof PublicIndexRoute
+  '/dealer/': typeof DealerIndexRoute
   '/_public/vehicles/$id': typeof PublicVehiclesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/dealer'
     | '/advisor'
     | '/browse'
     | '/contact'
@@ -136,6 +163,8 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/dealer/leads'
+    | '/dealer/'
     | '/vehicles/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -148,11 +177,14 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/dealer/leads'
     | '/'
+    | '/dealer'
     | '/vehicles/$id'
   id:
     | '__root__'
     | '/_public'
+    | '/dealer'
     | '/_public/advisor'
     | '/_public/browse'
     | '/_public/contact'
@@ -162,16 +194,26 @@ export interface FileRouteTypes {
     | '/_public/privacy'
     | '/_public/register'
     | '/_public/terms'
+    | '/dealer/leads'
     | '/_public/'
+    | '/dealer/'
     | '/_public/vehicles/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   PublicRoute: typeof PublicRouteWithChildren
+  DealerRoute: typeof DealerRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/dealer': {
+      id: '/dealer'
+      path: '/dealer'
+      fullPath: '/dealer'
+      preLoaderRoute: typeof DealerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_public': {
       id: '/_public'
       path: ''
@@ -179,12 +221,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dealer/': {
+      id: '/dealer/'
+      path: '/'
+      fullPath: '/dealer/'
+      preLoaderRoute: typeof DealerIndexRouteImport
+      parentRoute: typeof DealerRoute
+    }
     '/_public/': {
       id: '/_public/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/dealer/leads': {
+      id: '/dealer/leads'
+      path: '/leads'
+      fullPath: '/dealer/leads'
+      preLoaderRoute: typeof DealerLeadsRouteImport
+      parentRoute: typeof DealerRoute
     }
     '/_public/terms': {
       id: '/_public/terms'
@@ -290,8 +346,22 @@ const PublicRouteChildren: PublicRouteChildren = {
 const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren)
 
+interface DealerRouteChildren {
+  DealerLeadsRoute: typeof DealerLeadsRoute
+  DealerIndexRoute: typeof DealerIndexRoute
+}
+
+const DealerRouteChildren: DealerRouteChildren = {
+  DealerLeadsRoute: DealerLeadsRoute,
+  DealerIndexRoute: DealerIndexRoute,
+}
+
+const DealerRouteWithChildren =
+  DealerRoute._addFileChildren(DealerRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   PublicRoute: PublicRouteWithChildren,
+  DealerRoute: DealerRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
