@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as PublicIndexRouteImport } from './routes/_public.index'
+import { Route as PublicLeadCaptureRouteImport } from './routes/_public.lead-capture'
 import { Route as PublicBrowseRouteImport } from './routes/_public.browse'
 import { Route as PublicVehiclesIdRouteImport } from './routes/_public.vehicles.$id'
 
@@ -21,6 +22,11 @@ const PublicRoute = PublicRouteImport.update({
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicLeadCaptureRoute = PublicLeadCaptureRouteImport.update({
+  id: '/lead-capture',
+  path: '/lead-capture',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicBrowseRoute = PublicBrowseRouteImport.update({
@@ -37,10 +43,12 @@ const PublicVehiclesIdRoute = PublicVehiclesIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
   '/browse': typeof PublicBrowseRoute
+  '/lead-capture': typeof PublicLeadCaptureRoute
   '/vehicles/$id': typeof PublicVehiclesIdRoute
 }
 export interface FileRoutesByTo {
   '/browse': typeof PublicBrowseRoute
+  '/lead-capture': typeof PublicLeadCaptureRoute
   '/': typeof PublicIndexRoute
   '/vehicles/$id': typeof PublicVehiclesIdRoute
 }
@@ -48,18 +56,20 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_public': typeof PublicRouteWithChildren
   '/_public/browse': typeof PublicBrowseRoute
+  '/_public/lead-capture': typeof PublicLeadCaptureRoute
   '/_public/': typeof PublicIndexRoute
   '/_public/vehicles/$id': typeof PublicVehiclesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/browse' | '/vehicles/$id'
+  fullPaths: '/' | '/browse' | '/lead-capture' | '/vehicles/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/browse' | '/' | '/vehicles/$id'
+  to: '/browse' | '/lead-capture' | '/' | '/vehicles/$id'
   id:
     | '__root__'
     | '/_public'
     | '/_public/browse'
+    | '/_public/lead-capture'
     | '/_public/'
     | '/_public/vehicles/$id'
   fileRoutesById: FileRoutesById
@@ -84,6 +94,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_public/lead-capture': {
+      id: '/_public/lead-capture'
+      path: '/lead-capture'
+      fullPath: '/lead-capture'
+      preLoaderRoute: typeof PublicLeadCaptureRouteImport
+      parentRoute: typeof PublicRoute
+    }
     '/_public/browse': {
       id: '/_public/browse'
       path: '/browse'
@@ -103,12 +120,14 @@ declare module '@tanstack/react-router' {
 
 interface PublicRouteChildren {
   PublicBrowseRoute: typeof PublicBrowseRoute
+  PublicLeadCaptureRoute: typeof PublicLeadCaptureRoute
   PublicIndexRoute: typeof PublicIndexRoute
   PublicVehiclesIdRoute: typeof PublicVehiclesIdRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicBrowseRoute: PublicBrowseRoute,
+  PublicLeadCaptureRoute: PublicLeadCaptureRoute,
   PublicIndexRoute: PublicIndexRoute,
   PublicVehiclesIdRoute: PublicVehiclesIdRoute,
 }
