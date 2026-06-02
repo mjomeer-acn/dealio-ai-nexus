@@ -10,12 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as DealerRouteImport } from './routes/dealer'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as DealerIndexRouteImport } from './routes/dealer.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as PublicIndexRouteImport } from './routes/_public.index'
 import { Route as DealerLeadsRouteImport } from './routes/dealer.leads'
 import { Route as DealerInventoryRouteImport } from './routes/dealer.inventory'
 import { Route as DealerCommissionsRouteImport } from './routes/dealer.commissions'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
+import { Route as AdminKnowledgeRouteImport } from './routes/admin.knowledge'
+import { Route as AdminDealersRouteImport } from './routes/admin.dealers'
+import { Route as AdminAuditRouteImport } from './routes/admin.audit'
 import { Route as PublicTermsRouteImport } from './routes/_public.terms'
 import { Route as PublicRegisterRouteImport } from './routes/_public.register'
 import { Route as PublicPrivacyRouteImport } from './routes/_public.privacy'
@@ -33,6 +40,11 @@ const DealerRoute = DealerRouteImport.update({
   path: '/dealer',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
   getParentRoute: () => rootRouteImport,
@@ -41,6 +53,11 @@ const DealerIndexRoute = DealerIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DealerRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
@@ -61,6 +78,31 @@ const DealerCommissionsRoute = DealerCommissionsRouteImport.update({
   id: '/commissions',
   path: '/commissions',
   getParentRoute: () => DealerRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminKnowledgeRoute = AdminKnowledgeRouteImport.update({
+  id: '/knowledge',
+  path: '/knowledge',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDealersRoute = AdminDealersRouteImport.update({
+  id: '/dealers',
+  path: '/dealers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAuditRoute = AdminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AdminRoute,
 } as any)
 const PublicTermsRoute = PublicTermsRouteImport.update({
   id: '/terms',
@@ -120,6 +162,7 @@ const PublicVehiclesIdRoute = PublicVehiclesIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/dealer': typeof DealerRouteWithChildren
   '/advisor': typeof PublicAdvisorRoute
   '/browse': typeof PublicBrowseRoute
@@ -130,9 +173,15 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PublicPrivacyRoute
   '/register': typeof PublicRegisterRoute
   '/terms': typeof PublicTermsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/dealers': typeof AdminDealersRoute
+  '/admin/knowledge': typeof AdminKnowledgeRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/dealer/commissions': typeof DealerCommissionsRoute
   '/dealer/inventory': typeof DealerInventoryRoute
   '/dealer/leads': typeof DealerLeadsRouteWithChildren
+  '/admin/': typeof AdminIndexRoute
   '/dealer/': typeof DealerIndexRoute
   '/vehicles/$id': typeof PublicVehiclesIdRoute
   '/dealer/leads/$id': typeof DealerLeadsIdRoute
@@ -147,10 +196,16 @@ export interface FileRoutesByTo {
   '/privacy': typeof PublicPrivacyRoute
   '/register': typeof PublicRegisterRoute
   '/terms': typeof PublicTermsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/dealers': typeof AdminDealersRoute
+  '/admin/knowledge': typeof AdminKnowledgeRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/dealer/commissions': typeof DealerCommissionsRoute
   '/dealer/inventory': typeof DealerInventoryRoute
   '/dealer/leads': typeof DealerLeadsRouteWithChildren
   '/': typeof PublicIndexRoute
+  '/admin': typeof AdminIndexRoute
   '/dealer': typeof DealerIndexRoute
   '/vehicles/$id': typeof PublicVehiclesIdRoute
   '/dealer/leads/$id': typeof DealerLeadsIdRoute
@@ -158,6 +213,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_public': typeof PublicRouteWithChildren
+  '/admin': typeof AdminRouteWithChildren
   '/dealer': typeof DealerRouteWithChildren
   '/_public/advisor': typeof PublicAdvisorRoute
   '/_public/browse': typeof PublicBrowseRoute
@@ -168,10 +224,16 @@ export interface FileRoutesById {
   '/_public/privacy': typeof PublicPrivacyRoute
   '/_public/register': typeof PublicRegisterRoute
   '/_public/terms': typeof PublicTermsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/dealers': typeof AdminDealersRoute
+  '/admin/knowledge': typeof AdminKnowledgeRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/dealer/commissions': typeof DealerCommissionsRoute
   '/dealer/inventory': typeof DealerInventoryRoute
   '/dealer/leads': typeof DealerLeadsRouteWithChildren
   '/_public/': typeof PublicIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/dealer/': typeof DealerIndexRoute
   '/_public/vehicles/$id': typeof PublicVehiclesIdRoute
   '/dealer/leads/$id': typeof DealerLeadsIdRoute
@@ -180,6 +242,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/dealer'
     | '/advisor'
     | '/browse'
@@ -190,9 +253,15 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/admin/audit'
+    | '/admin/dealers'
+    | '/admin/knowledge'
+    | '/admin/leads'
+    | '/admin/users'
     | '/dealer/commissions'
     | '/dealer/inventory'
     | '/dealer/leads'
+    | '/admin/'
     | '/dealer/'
     | '/vehicles/$id'
     | '/dealer/leads/$id'
@@ -207,16 +276,23 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/admin/audit'
+    | '/admin/dealers'
+    | '/admin/knowledge'
+    | '/admin/leads'
+    | '/admin/users'
     | '/dealer/commissions'
     | '/dealer/inventory'
     | '/dealer/leads'
     | '/'
+    | '/admin'
     | '/dealer'
     | '/vehicles/$id'
     | '/dealer/leads/$id'
   id:
     | '__root__'
     | '/_public'
+    | '/admin'
     | '/dealer'
     | '/_public/advisor'
     | '/_public/browse'
@@ -227,10 +303,16 @@ export interface FileRouteTypes {
     | '/_public/privacy'
     | '/_public/register'
     | '/_public/terms'
+    | '/admin/audit'
+    | '/admin/dealers'
+    | '/admin/knowledge'
+    | '/admin/leads'
+    | '/admin/users'
     | '/dealer/commissions'
     | '/dealer/inventory'
     | '/dealer/leads'
     | '/_public/'
+    | '/admin/'
     | '/dealer/'
     | '/_public/vehicles/$id'
     | '/dealer/leads/$id'
@@ -238,6 +320,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   PublicRoute: typeof PublicRouteWithChildren
+  AdminRoute: typeof AdminRouteWithChildren
   DealerRoute: typeof DealerRouteWithChildren
 }
 
@@ -248,6 +331,13 @@ declare module '@tanstack/react-router' {
       path: '/dealer'
       fullPath: '/dealer'
       preLoaderRoute: typeof DealerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_public': {
@@ -263,6 +353,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dealer/'
       preLoaderRoute: typeof DealerIndexRouteImport
       parentRoute: typeof DealerRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/_public/': {
       id: '/_public/'
@@ -291,6 +388,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/dealer/commissions'
       preLoaderRoute: typeof DealerCommissionsRouteImport
       parentRoute: typeof DealerRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/knowledge': {
+      id: '/admin/knowledge'
+      path: '/knowledge'
+      fullPath: '/admin/knowledge'
+      preLoaderRoute: typeof AdminKnowledgeRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/dealers': {
+      id: '/admin/dealers'
+      path: '/dealers'
+      fullPath: '/admin/dealers'
+      preLoaderRoute: typeof AdminDealersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/audit': {
+      id: '/admin/audit'
+      path: '/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AdminAuditRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/_public/terms': {
       id: '/_public/terms'
@@ -403,6 +535,26 @@ const PublicRouteChildren: PublicRouteChildren = {
 const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren)
 
+interface AdminRouteChildren {
+  AdminAuditRoute: typeof AdminAuditRoute
+  AdminDealersRoute: typeof AdminDealersRoute
+  AdminKnowledgeRoute: typeof AdminKnowledgeRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAuditRoute: AdminAuditRoute,
+  AdminDealersRoute: AdminDealersRoute,
+  AdminKnowledgeRoute: AdminKnowledgeRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 interface DealerLeadsRouteChildren {
   DealerLeadsIdRoute: typeof DealerLeadsIdRoute
 }
@@ -434,6 +586,7 @@ const DealerRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   PublicRoute: PublicRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
   DealerRoute: DealerRouteWithChildren,
 }
 export const routeTree = rootRouteImport
