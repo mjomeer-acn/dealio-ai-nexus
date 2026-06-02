@@ -23,6 +23,7 @@ import { Route as PublicLeadCaptureRouteImport } from './routes/_public.lead-cap
 import { Route as PublicContactRouteImport } from './routes/_public.contact'
 import { Route as PublicBrowseRouteImport } from './routes/_public.browse'
 import { Route as PublicAdvisorRouteImport } from './routes/_public.advisor'
+import { Route as DealerLeadsIdRouteImport } from './routes/dealer.leads.$id'
 import { Route as PublicVehiclesIdRouteImport } from './routes/_public.vehicles.$id'
 
 const DealerRoute = DealerRouteImport.update({
@@ -94,6 +95,11 @@ const PublicAdvisorRoute = PublicAdvisorRouteImport.update({
   path: '/advisor',
   getParentRoute: () => PublicRoute,
 } as any)
+const DealerLeadsIdRoute = DealerLeadsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => DealerLeadsRoute,
+} as any)
 const PublicVehiclesIdRoute = PublicVehiclesIdRouteImport.update({
   id: '/vehicles/$id',
   path: '/vehicles/$id',
@@ -112,9 +118,10 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PublicPrivacyRoute
   '/register': typeof PublicRegisterRoute
   '/terms': typeof PublicTermsRoute
-  '/dealer/leads': typeof DealerLeadsRoute
+  '/dealer/leads': typeof DealerLeadsRouteWithChildren
   '/dealer/': typeof DealerIndexRoute
   '/vehicles/$id': typeof PublicVehiclesIdRoute
+  '/dealer/leads/$id': typeof DealerLeadsIdRoute
 }
 export interface FileRoutesByTo {
   '/advisor': typeof PublicAdvisorRoute
@@ -126,10 +133,11 @@ export interface FileRoutesByTo {
   '/privacy': typeof PublicPrivacyRoute
   '/register': typeof PublicRegisterRoute
   '/terms': typeof PublicTermsRoute
-  '/dealer/leads': typeof DealerLeadsRoute
+  '/dealer/leads': typeof DealerLeadsRouteWithChildren
   '/': typeof PublicIndexRoute
   '/dealer': typeof DealerIndexRoute
   '/vehicles/$id': typeof PublicVehiclesIdRoute
+  '/dealer/leads/$id': typeof DealerLeadsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -144,10 +152,11 @@ export interface FileRoutesById {
   '/_public/privacy': typeof PublicPrivacyRoute
   '/_public/register': typeof PublicRegisterRoute
   '/_public/terms': typeof PublicTermsRoute
-  '/dealer/leads': typeof DealerLeadsRoute
+  '/dealer/leads': typeof DealerLeadsRouteWithChildren
   '/_public/': typeof PublicIndexRoute
   '/dealer/': typeof DealerIndexRoute
   '/_public/vehicles/$id': typeof PublicVehiclesIdRoute
+  '/dealer/leads/$id': typeof DealerLeadsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '/dealer/leads'
     | '/dealer/'
     | '/vehicles/$id'
+    | '/dealer/leads/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/advisor'
@@ -181,6 +191,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dealer'
     | '/vehicles/$id'
+    | '/dealer/leads/$id'
   id:
     | '__root__'
     | '/_public'
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '/_public/'
     | '/dealer/'
     | '/_public/vehicles/$id'
+    | '/dealer/leads/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -305,6 +317,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAdvisorRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/dealer/leads/$id': {
+      id: '/dealer/leads/$id'
+      path: '/$id'
+      fullPath: '/dealer/leads/$id'
+      preLoaderRoute: typeof DealerLeadsIdRouteImport
+      parentRoute: typeof DealerLeadsRoute
+    }
     '/_public/vehicles/$id': {
       id: '/_public/vehicles/$id'
       path: '/vehicles/$id'
@@ -346,13 +365,25 @@ const PublicRouteChildren: PublicRouteChildren = {
 const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren)
 
+interface DealerLeadsRouteChildren {
+  DealerLeadsIdRoute: typeof DealerLeadsIdRoute
+}
+
+const DealerLeadsRouteChildren: DealerLeadsRouteChildren = {
+  DealerLeadsIdRoute: DealerLeadsIdRoute,
+}
+
+const DealerLeadsRouteWithChildren = DealerLeadsRoute._addFileChildren(
+  DealerLeadsRouteChildren,
+)
+
 interface DealerRouteChildren {
-  DealerLeadsRoute: typeof DealerLeadsRoute
+  DealerLeadsRoute: typeof DealerLeadsRouteWithChildren
   DealerIndexRoute: typeof DealerIndexRoute
 }
 
 const DealerRouteChildren: DealerRouteChildren = {
-  DealerLeadsRoute: DealerLeadsRoute,
+  DealerLeadsRoute: DealerLeadsRouteWithChildren,
   DealerIndexRoute: DealerIndexRoute,
 }
 
