@@ -30,10 +30,12 @@ function paginate<T>(items: T[], query: Record<string, string | undefined>): { r
   return { rows: items.slice(start, start + limit), meta: { page, limit, total, totalPages } };
 }
 
-function search<T extends Record<string, unknown>>(items: T[], q: string | undefined, fields: (keyof T)[]): T[] {
+function search<T>(items: T[], q: string | undefined, fields: (keyof T)[]): T[] {
   if (!q) return items;
   const lower = q.toLowerCase();
-  return items.filter((it) => fields.some((f) => String(it[f] ?? "").toLowerCase().includes(lower)));
+  return items.filter((it) =>
+    fields.some((f) => String((it as Record<string, unknown>)[f as string] ?? "").toLowerCase().includes(lower)),
+  );
 }
 
 function notDeleted<T extends { deletedAt?: string | null }>(items: T[]): T[] {
@@ -132,16 +134,17 @@ registerMock("GET", "/vehicles/:id", async ({ pathParams }) => {
 
 registerMock("POST", "/vehicles", async ({ body }) => {
   const u = requireAuth();
+  const b = (body ?? {}) as Partial<Vehicle>;
   const v: Vehicle = {
+    ...b,
     id: newId("veh"),
     dealerId: u.dealerId ?? db.dealers[0]!.id,
-    images: [],
-    featured: false,
-    status: "PUBLISHED",
+    images: b.images ?? [],
+    featured: b.featured ?? false,
+    status: b.status ?? "PUBLISHED",
     createdAt: nowIso(),
     updatedAt: nowIso(),
-    ...(body as Omit<Vehicle, "id" | "dealerId" | "createdAt" | "updatedAt">),
-  };
+  } as Vehicle;
   db.vehicles.unshift(v);
   return ok(v);
 });
@@ -326,17 +329,18 @@ registerMock("GET", "/dealers/:id", async ({ pathParams }) => {
   return ok(d);
 });
 registerMock("POST", "/dealers", async ({ body }) => {
+  const b = (body ?? {}) as Partial<Dealer>;
   const d: Dealer = {
+    ...b,
     id: newId("dlr"),
-    status: "PENDING",
-    commissionRate: 0.03,
-    verticals: ["AUTOMOTIVE"],
-    staffCount: 0,
-    country: "Mauritius",
+    status: b.status ?? "PENDING",
+    commissionRate: b.commissionRate ?? 0.03,
+    verticals: b.verticals ?? ["AUTOMOTIVE"],
+    staffCount: b.staffCount ?? 0,
+    country: b.country ?? "Mauritius",
     createdAt: nowIso(),
     updatedAt: nowIso(),
-    ...(body as Omit<Dealer, "id" | "createdAt" | "updatedAt">),
-  };
+  } as Dealer;
   db.dealers.unshift(d);
   return ok(d);
 });
