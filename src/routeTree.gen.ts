@@ -11,7 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as PublicIndexRouteImport } from './routes/_public.index'
+import { Route as PublicTermsRouteImport } from './routes/_public.terms'
+import { Route as PublicRegisterRouteImport } from './routes/_public.register'
+import { Route as PublicPrivacyRouteImport } from './routes/_public.privacy'
+import { Route as PublicMyInquiriesRouteImport } from './routes/_public.my-inquiries'
+import { Route as PublicLoginRouteImport } from './routes/_public.login'
 import { Route as PublicLeadCaptureRouteImport } from './routes/_public.lead-capture'
+import { Route as PublicContactRouteImport } from './routes/_public.contact'
 import { Route as PublicBrowseRouteImport } from './routes/_public.browse'
 import { Route as PublicAdvisorRouteImport } from './routes/_public.advisor'
 import { Route as PublicVehiclesIdRouteImport } from './routes/_public.vehicles.$id'
@@ -25,9 +31,39 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PublicRoute,
 } as any)
+const PublicTermsRoute = PublicTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicRegisterRoute = PublicRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicPrivacyRoute = PublicPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicMyInquiriesRoute = PublicMyInquiriesRouteImport.update({
+  id: '/my-inquiries',
+  path: '/my-inquiries',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicLoginRoute = PublicLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => PublicRoute,
+} as any)
 const PublicLeadCaptureRoute = PublicLeadCaptureRouteImport.update({
   id: '/lead-capture',
   path: '/lead-capture',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicContactRoute = PublicContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicBrowseRoute = PublicBrowseRouteImport.update({
@@ -50,13 +86,25 @@ export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
   '/advisor': typeof PublicAdvisorRoute
   '/browse': typeof PublicBrowseRoute
+  '/contact': typeof PublicContactRoute
   '/lead-capture': typeof PublicLeadCaptureRoute
+  '/login': typeof PublicLoginRoute
+  '/my-inquiries': typeof PublicMyInquiriesRoute
+  '/privacy': typeof PublicPrivacyRoute
+  '/register': typeof PublicRegisterRoute
+  '/terms': typeof PublicTermsRoute
   '/vehicles/$id': typeof PublicVehiclesIdRoute
 }
 export interface FileRoutesByTo {
   '/advisor': typeof PublicAdvisorRoute
   '/browse': typeof PublicBrowseRoute
+  '/contact': typeof PublicContactRoute
   '/lead-capture': typeof PublicLeadCaptureRoute
+  '/login': typeof PublicLoginRoute
+  '/my-inquiries': typeof PublicMyInquiriesRoute
+  '/privacy': typeof PublicPrivacyRoute
+  '/register': typeof PublicRegisterRoute
+  '/terms': typeof PublicTermsRoute
   '/': typeof PublicIndexRoute
   '/vehicles/$id': typeof PublicVehiclesIdRoute
 }
@@ -65,21 +113,55 @@ export interface FileRoutesById {
   '/_public': typeof PublicRouteWithChildren
   '/_public/advisor': typeof PublicAdvisorRoute
   '/_public/browse': typeof PublicBrowseRoute
+  '/_public/contact': typeof PublicContactRoute
   '/_public/lead-capture': typeof PublicLeadCaptureRoute
+  '/_public/login': typeof PublicLoginRoute
+  '/_public/my-inquiries': typeof PublicMyInquiriesRoute
+  '/_public/privacy': typeof PublicPrivacyRoute
+  '/_public/register': typeof PublicRegisterRoute
+  '/_public/terms': typeof PublicTermsRoute
   '/_public/': typeof PublicIndexRoute
   '/_public/vehicles/$id': typeof PublicVehiclesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/advisor' | '/browse' | '/lead-capture' | '/vehicles/$id'
+  fullPaths:
+    | '/'
+    | '/advisor'
+    | '/browse'
+    | '/contact'
+    | '/lead-capture'
+    | '/login'
+    | '/my-inquiries'
+    | '/privacy'
+    | '/register'
+    | '/terms'
+    | '/vehicles/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/advisor' | '/browse' | '/lead-capture' | '/' | '/vehicles/$id'
+  to:
+    | '/advisor'
+    | '/browse'
+    | '/contact'
+    | '/lead-capture'
+    | '/login'
+    | '/my-inquiries'
+    | '/privacy'
+    | '/register'
+    | '/terms'
+    | '/'
+    | '/vehicles/$id'
   id:
     | '__root__'
     | '/_public'
     | '/_public/advisor'
     | '/_public/browse'
+    | '/_public/contact'
     | '/_public/lead-capture'
+    | '/_public/login'
+    | '/_public/my-inquiries'
+    | '/_public/privacy'
+    | '/_public/register'
+    | '/_public/terms'
     | '/_public/'
     | '/_public/vehicles/$id'
   fileRoutesById: FileRoutesById
@@ -104,11 +186,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_public/terms': {
+      id: '/_public/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof PublicTermsRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/register': {
+      id: '/_public/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof PublicRegisterRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/privacy': {
+      id: '/_public/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PublicPrivacyRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/my-inquiries': {
+      id: '/_public/my-inquiries'
+      path: '/my-inquiries'
+      fullPath: '/my-inquiries'
+      preLoaderRoute: typeof PublicMyInquiriesRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/login': {
+      id: '/_public/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof PublicLoginRouteImport
+      parentRoute: typeof PublicRoute
+    }
     '/_public/lead-capture': {
       id: '/_public/lead-capture'
       path: '/lead-capture'
       fullPath: '/lead-capture'
       preLoaderRoute: typeof PublicLeadCaptureRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/contact': {
+      id: '/_public/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof PublicContactRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_public/browse': {
@@ -138,7 +262,13 @@ declare module '@tanstack/react-router' {
 interface PublicRouteChildren {
   PublicAdvisorRoute: typeof PublicAdvisorRoute
   PublicBrowseRoute: typeof PublicBrowseRoute
+  PublicContactRoute: typeof PublicContactRoute
   PublicLeadCaptureRoute: typeof PublicLeadCaptureRoute
+  PublicLoginRoute: typeof PublicLoginRoute
+  PublicMyInquiriesRoute: typeof PublicMyInquiriesRoute
+  PublicPrivacyRoute: typeof PublicPrivacyRoute
+  PublicRegisterRoute: typeof PublicRegisterRoute
+  PublicTermsRoute: typeof PublicTermsRoute
   PublicIndexRoute: typeof PublicIndexRoute
   PublicVehiclesIdRoute: typeof PublicVehiclesIdRoute
 }
@@ -146,7 +276,13 @@ interface PublicRouteChildren {
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAdvisorRoute: PublicAdvisorRoute,
   PublicBrowseRoute: PublicBrowseRoute,
+  PublicContactRoute: PublicContactRoute,
   PublicLeadCaptureRoute: PublicLeadCaptureRoute,
+  PublicLoginRoute: PublicLoginRoute,
+  PublicMyInquiriesRoute: PublicMyInquiriesRoute,
+  PublicPrivacyRoute: PublicPrivacyRoute,
+  PublicRegisterRoute: PublicRegisterRoute,
+  PublicTermsRoute: PublicTermsRoute,
   PublicIndexRoute: PublicIndexRoute,
   PublicVehiclesIdRoute: PublicVehiclesIdRoute,
 }
@@ -160,3 +296,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
